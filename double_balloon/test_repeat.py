@@ -9,6 +9,38 @@ def load_data():
 
     return data
 
+"""
+function: 比对数字
+    type: "all" :全部数字."six","five",and so on .
+"""
+def cacunums(firrow, secrow, type="all"):
+    nums = 0
+    if type == 'all':
+        # 相同时，打印两行的索引
+        if (total_matrix[firrow] == total_matrix[secrow]).all():
+            print('iia ', firrow, 'iib ', secrow)
+    elif type == 'six':
+        for ii in range(6):
+            fircol = ii
+            seccol = -1
+            # 此处代码需改进，因为firow 的数字需要跟secrow的每个数字比
+            while fircol != seccol:
+                seccol += 1
+                if seccol == 6:
+                    break
+                sub = total_matrix[firrow][fircol] - total_matrix[secrow][seccol]
+                if sub == 0:
+                    nums += 1
+
+        if total_matrix[firrow][6] == total_matrix[secrow][6]:
+            nums += 1
+        if nums == 5:
+            print('iia ', firrow + 1, 'iib ', secrow + 1)
+
+
+
+
+
 text = load_data()
 
 # 定义一个矩阵，稍后填充
@@ -28,7 +60,5 @@ for iia in range(len(text)):
         times += 1
         if iib == len(text):
             break
-        # 相同时，打印两行的索引
-        if (total_matrix[iia] == total_matrix[iib]).all():
-            print('iia ', iia, 'iib ', iib)
+        cacunums(iia, iib, 'six')
 print(total_matrix.shape)

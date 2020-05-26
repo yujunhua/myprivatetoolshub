@@ -18,7 +18,7 @@
 >+ **blue.py:** analyze blue of double
 >+ **d3_analyze.py:** analyze 3d
 >+ **double_load2txt.py:** download data to txt file(relate:txt)
->+ **test_repeat.py:** find two same rows and if exit ,print indexes(relate:matrix, any(), all()) 
+>+ **test_repeat.py:** find two same rows and if exist ,print indexes(relate:matrix, any(), all()) 
               
 
 ***NOTE:*** Every file can be run separately.
