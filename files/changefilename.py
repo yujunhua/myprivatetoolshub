@@ -8,12 +8,13 @@ out_path = "D:\TMP\ml/tf\YOLOv3_TensorFlow\data\demo_data\myface\jpg/"
 xml_in_path = "D:\TMP\ml/tf\YOLOv3_TensorFlow\data\demo_data\myface/xml1/"
 xml_out_path = "D:\TMP\ml/tf\YOLOv3_TensorFlow\data\demo_data\myface/xml/"
 """os.listdir(path) 操作效果为 返回指定路径(path)文件夹中所有文件名"""
-filename_list = os.listdir(xml_in_path)  # 扫描目标路径的文件,将文件名存入列表
+
 
 filename_dic = {}
 
 # 批量修改文件后缀名
-def changesuffixname(in_path, out_path, filename_list):
+def changesuffixname(in_path, out_path):
+    filename_list = os.listdir(in_path)  # 扫描目标路径的文件,将文件名存入列表
     for filename in filename_list:
         oldname_nojpg = filename[:-4]
         used_name = in_path + filename
@@ -23,19 +24,21 @@ def changesuffixname(in_path, out_path, filename_list):
         print("%s ----->> %s" %(used_name, new_name))
 
 # 根据jpg文件的对应方式，修改xml文件命名
-def changexmlnamebydic(in_path, out_path, filename_list):
+def changexmlnamebydic(in_path, out_path):
+    filename_list = os.listdir(in_path)  # 扫描目标路径的文件,将文件名存入列表
     filename_loaddic = pickle.load(open('oldnewname_dic.p', mode='rb'))
     for filename in filename_list:
         oldname_nojpg = filename[:-4]
         used_name = in_path + filename
         newname_nojpg = filename_loaddic[oldname_nojpg]
-        new_name = out_path + newname_nojpg + ".xml"
+        new_name = out_path + newname_nojpg + ".pts"
         os.rename(used_name,new_name)
         print("%s ----->> %s" %(used_name, new_name))
 
 # 打乱顺序重新命名
-def changefilenamerandom(in_path, out_path, filename_list):
-    num_list = list(range(1, 233))
+def changefilenamerandom(in_path, out_path):
+    filename_list = os.listdir(in_path)  # 扫描目标路径的文件,将文件名存入列表
+    num_list = list(range(1, len(filename_list) + 1))
     for filename in filename_list:
         oldname_nojpg = filename[:-4]
         used_name = in_path + filename
@@ -45,14 +48,15 @@ def changefilenamerandom(in_path, out_path, filename_list):
         newname_nojpg = str(new_num).zfill(6)
         new_name = out_path + newname_nojpg + ".jpg"
         os.rename(used_name,new_name)
-        filename_dic.update({oldname_nojpg: newname_nojpg}) # 老旧名存成字典，一遍xml文件对应修改
+        filename_dic.update({oldname_nojpg: newname_nojpg}) # 老旧名存成字典，以便xml文件对应修改
         pickle.dump(filename_dic, open('oldnewname_dic.p', 'wb')) # 字典的持久化
         print("%s ----->> %s" %(used_name, new_name))
 
 
 
 # 按顺序命名
-def changefilenameorder(in_path, out_path, filename_list):
+def changefilenameorder(in_path, out_path):
+    filename_list = os.listdir(in_path)  # 扫描目标路径的文件,将文件名存入列表
     a = 1
     for i in filename_list:
         used_name = in_path + filename_list[a-1]
@@ -64,6 +68,6 @@ def changefilenameorder(in_path, out_path, filename_list):
 
 
 if __name__ == '__main__':
-    # changefilenamerandom(in_path, out_path, filename_list)
-    # changexmlnamebydic(xml_in_path, xml_out_path, filename_list)
-    changesuffixname(xml_in_path, xml_out_path, filename_list)
+    # changefilenamerandom(in_path, out_path)
+    changexmlnamebydic(xml_in_path, xml_out_path)
+    # changesuffixname(xml_in_path, xml_out_path)
