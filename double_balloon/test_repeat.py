@@ -1,6 +1,7 @@
 import os
 import time
 import numpy as np
+from tqdm import trange
 
 # 从文件中加载数据
 def load_data():
@@ -51,9 +52,10 @@ start = time.clock()
 
 # 判断是否有两行相同的数字
 
-for iia in range(len(text)):
+for iia in trange(len(text)):
     for iib in range(len(text)):
-        cacunums(iia, iib)
+        if iia != iib:
+            cacunums(iia, iib)
 
 end = time.clock()
 print("totla time : ", (end - start))
